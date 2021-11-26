@@ -16,6 +16,7 @@ dependencies:
     sdk: flutter
   flutter_svg: 
   get:
+  intl:
   percent_indicator:
 
 
@@ -28,6 +29,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets: 
+    - assets/images/raster/.
+    - assets/images/vector/.
 
   
   

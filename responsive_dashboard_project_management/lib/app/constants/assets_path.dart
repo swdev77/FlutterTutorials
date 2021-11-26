@@ -7,7 +7,7 @@ class Font {
 class ImageAnimationPath {}
 
 class ImageRasterPath {
-  static const _folderPath = 'assets/images/rester';
+  static const _folderPath = 'assets/images/raster';
 
   static const avatar1 = '$_folderPath/avatar-1.png';
   static const avatar2 = '$_folderPath/avatar-2.png';
