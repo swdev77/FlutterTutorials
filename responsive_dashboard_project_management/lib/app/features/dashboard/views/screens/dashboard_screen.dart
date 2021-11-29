@@ -3,14 +3,16 @@ library dashboard;
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:responsive_dashboard_project_management/app/constants/app_constants.dart';
-import 'package:responsive_dashboard_project_management/app/shared_components/progress_card.dart';
-import 'package:responsive_dashboard_project_management/app/shared_components/progress_report_card.dart';
-import 'package:responsive_dashboard_project_management/app/shared_components/project_card.dart';
-import 'package:responsive_dashboard_project_management/app/shared_components/search_field.dart';
-import 'package:responsive_dashboard_project_management/app/shared_components/selection_button.dart';
-import 'package:responsive_dashboard_project_management/app/shared_components/today_text.dart';
-import 'package:responsive_dashboard_project_management/app/shared_components/upgrade_premium_card.dart';
+import 'package:responsive_dashboard_project_management/app/shared_components/task_card.dart';
+import '../../../../constants/app_constants.dart';
+import '../../../../shared_components/progress_card.dart';
+import '../../../../shared_components/progress_report_card.dart';
+import '../../../../shared_components/project_card.dart';
+import '../../../../shared_components/search_field.dart';
+import '../../../../shared_components/selection_button.dart';
+import '../../../../shared_components/today_text.dart';
+import '../../../../shared_components/upgrade_premium_card.dart';
+import '../../../../utils/helpers/app_helpers.dart';
 import '../../../../shared_components/header_text.dart';
 
 part '../../bindings/dashboard_binding.dart';
@@ -18,6 +20,7 @@ part '../../bindings/dashboard_binding.dart';
 part '../../controllers/dashboard_controller.dart';
 
 part '../components/header.dart';
+part '../components/overview_header.dart';
 part '../components/sidebar.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
@@ -40,6 +43,8 @@ class DashboardScreen extends GetView<DashboardController> {
                 _buildHeader(),
                 const SizedBox(height: kSpacing),
                 _buildProgress(),
+                const SizedBox(height: kSpacing),
+                _buildTaskOverview(data: controller.getAllTask()),
               ],
             ),
           ),
@@ -89,6 +94,33 @@ class DashboardScreen extends GetView<DashboardController> {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTaskOverview({required List<TaskCardData> data}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+      child: Column(
+        children: [
+          _OverviewHeader(
+            onSelected: (task) {},
+          ),
+          const SizedBox(height: kSpacing),
+          Row(
+            children: data
+                .map((e) => Expanded(
+                      child: TaskCard(
+                        data: e,
+                        onPressedComments: () {},
+                        onPressedContirbutors: () {},
+                        onPressedMore: () {},
+                        onPressedTask: () {},
+                      ),
+                    ))
+                .toList(),
+          )
         ],
       ),
     );
