@@ -53,4 +53,27 @@ class DashboardController extends GetxController {
       ),
     ];
   }
+
+  List<ProjectCardData> getActiveProjectData() {
+    return [
+      ProjectCardData(
+        percent: .3,
+        projectImage: const AssetImage(ImageRasterPath.logo2),
+        projectName: 'Taxi Online',
+        releaseTime: DateTime.now().add(const Duration(days: 90)),
+      ),
+      ProjectCardData(
+        percent: .5,
+        projectImage: const AssetImage(ImageRasterPath.logo1),
+        projectName: 'E-Movies Mobile',
+        releaseTime: DateTime.now().add(const Duration(days: 60)),
+      ),
+      ProjectCardData(
+        percent: .8,
+        projectImage: const AssetImage(ImageRasterPath.logo2),
+        projectName: 'Video Converter App',
+        releaseTime: DateTime.now().add(const Duration(days: 150)),
+      ),
+    ];
+  }
 }

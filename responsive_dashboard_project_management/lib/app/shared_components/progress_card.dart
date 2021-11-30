@@ -14,7 +14,9 @@ class ProgressCardData {
 
 class ProgressCard extends StatelessWidget {
   const ProgressCard(
-      {required this.data, required this.onPressedCheck, Key? key})
+      {required this.data, 
+      required this.onPressedCheck, 
+      Key? key})
       : super(key: key);
 
   final ProgressCardData data;

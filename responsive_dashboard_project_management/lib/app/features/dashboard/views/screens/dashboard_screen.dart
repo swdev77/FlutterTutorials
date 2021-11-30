@@ -19,6 +19,7 @@ part '../../bindings/dashboard_binding.dart';
 
 part '../../controllers/dashboard_controller.dart';
 
+part '../components/active_project_card.dart';
 part '../components/header.dart';
 part '../components/overview_header.dart';
 part '../components/sidebar.dart';
@@ -29,32 +30,37 @@ class DashboardScreen extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
-        children: [
-          Flexible(
-            flex: 4,
-            child: _Sidebar(data: controller.getSelectedProject()),
-          ),
-          Flexible(
-            flex: 9,
-            child: Column(
-              children: [
-                const SizedBox(height: kSpacing),
-                _buildHeader(),
-                const SizedBox(height: kSpacing),
-                _buildProgress(),
-                const SizedBox(height: kSpacing),
-                _buildTaskOverview(data: controller.getAllTask()),
-              ],
+      body: SingleChildScrollView(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(
+              flex: 4,
+              child: _Sidebar(data: controller.getSelectedProject()),
             ),
-          ),
-          Flexible(
-            flex: 4,
-            child: Container(
-              color: Colors.green,
+            Flexible(
+              flex: 9,
+              child: Column(
+                children: [
+                  const SizedBox(height: kSpacing),
+                  _buildHeader(),
+                  const SizedBox(height: kSpacing),
+                  _buildProgress(),
+                  const SizedBox(height: kSpacing),
+                  _buildTaskOverview(data: controller.getAllTask()),
+                  const SizedBox(height: kSpacing),
+                  _buildActiveProject(data: controller.getActiveProjectData()),
+                ],
+              ),
             ),
-          )
-        ],
+            Flexible(
+              flex: 4,
+              child: Container(
+                color: Colors.green,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -123,6 +129,13 @@ class DashboardScreen extends GetView<DashboardController> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildActiveProject({required List<ProjectCardData> data}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+      child: _ActiveProjectCard(data: data, onPressedAll: () {}),
     );
   }
 }
