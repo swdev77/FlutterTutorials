@@ -1,6 +1,12 @@
 part of dashboard;
 
 class DashboardController extends GetxController {
+  _Profile getProfile() => const _Profile(
+        photo: AssetImage(ImageRasterPath.avatar1),
+        name: 'Zafarjon Olimov',
+        email: 'zafarjon.olimov@mail.net',
+      );
+
   ProjectCardData getSelectedProject() {
     return ProjectCardData(
       percent: .3,

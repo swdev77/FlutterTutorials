@@ -1,5 +1,7 @@
 library dashboard;
 
+import 'dart:io';
+
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +17,8 @@ import '../../../../shared_components/upgrade_premium_card.dart';
 import '../../../../utils/helpers/app_helpers.dart';
 import '../../../../shared_components/header_text.dart';
 
+part '../../models/profile.dart';
+
 part '../../bindings/dashboard_binding.dart';
 
 part '../../controllers/dashboard_controller.dart';
@@ -23,6 +27,7 @@ part '../components/active_project_card.dart';
 part '../components/header.dart';
 part '../components/overview_header.dart';
 part '../components/sidebar.dart';
+part '../components/profile_tile.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -55,8 +60,11 @@ class DashboardScreen extends GetView<DashboardController> {
             ),
             Flexible(
               flex: 4,
-              child: Container(
-                color: Colors.green,
+              child: Column(
+                children: [
+                  const SizedBox(height: kSpacing),
+                  _buildProfile(data: controller.getProfile()),
+                ],
               ),
             )
           ],
@@ -138,4 +146,9 @@ class DashboardScreen extends GetView<DashboardController> {
       child: _ActiveProjectCard(data: data, onPressedAll: () {}),
     );
   }
+
+  Widget _buildProfile({required _Profile data}) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+        child: _ProfileTile(data: data, onPressedNotification: () {}),
+      );
 }
