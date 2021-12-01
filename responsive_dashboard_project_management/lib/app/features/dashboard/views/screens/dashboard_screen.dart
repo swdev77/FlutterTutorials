@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_dashboard_project_management/app/features/dashboard/views/components/get_premium_card.dart';
 import 'package:responsive_dashboard_project_management/app/shared_components/list_profil_image.dart';
 import 'package:responsive_dashboard_project_management/app/shared_components/task_card.dart';
 import '../../../../constants/app_constants.dart';
@@ -67,7 +68,15 @@ class DashboardScreen extends GetView<DashboardController> {
                   const SizedBox(height: kSpacing),
                   _buildProfile(data: controller.getProfile()),
                   const Divider(thickness: 1),
-                  _buildTeamMember(data: controller.getMembers())
+                  const SizedBox(height: kSpacing),
+                  _buildTeamMember(data: controller.getMembers()),
+                  const SizedBox(height: kSpacing),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+                    child: GetPremiumCard(onPressed: () {}),
+                  ),
+                  const SizedBox(height: kSpacing),
+                  const Divider(thickness: 1),
                 ],
               ),
             )
