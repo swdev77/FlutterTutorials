@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:responsive_dashboard_project_management/app/shared_components/list_profil_image.dart';
 import 'package:responsive_dashboard_project_management/app/shared_components/task_card.dart';
 import '../../../../constants/app_constants.dart';
 import '../../../../shared_components/progress_card.dart';
@@ -28,6 +29,7 @@ part '../components/header.dart';
 part '../components/overview_header.dart';
 part '../components/sidebar.dart';
 part '../components/profile_tile.dart';
+part '../components/team_member.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -64,6 +66,8 @@ class DashboardScreen extends GetView<DashboardController> {
                 children: [
                   const SizedBox(height: kSpacing),
                   _buildProfile(data: controller.getProfile()),
+                  const Divider(thickness: 1),
+                  _buildTeamMember(data: controller.getMembers())
                 ],
               ),
             )
@@ -140,15 +144,31 @@ class DashboardScreen extends GetView<DashboardController> {
     );
   }
 
-  Widget _buildActiveProject({required List<ProjectCardData> data}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      child: _ActiveProjectCard(data: data, onPressedAll: () {}),
-    );
-  }
+  Widget _buildActiveProject({required List<ProjectCardData> data}) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+        child: _ActiveProjectCard(data: data, onPressedAll: () {}),
+      );
 
   Widget _buildProfile({required _Profile data}) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: kSpacing),
         child: _ProfileTile(data: data, onPressedNotification: () {}),
+      );
+
+  Widget _buildTeamMember({required List<ImageProvider> data}) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _TeamMember(
+              onPressedAdd: () {},
+              totalMember: data.length,
+            ),
+            const SizedBox(height: kSpacing),
+            ListProfilImage(
+              maxImages: 6,
+              images: data,
+            ),
+          ],
+        ),
       );
 }
