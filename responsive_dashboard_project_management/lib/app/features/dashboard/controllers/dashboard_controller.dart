@@ -91,4 +91,47 @@ class DashboardController extends GetxController {
         const AssetImage(ImageRasterPath.avatar5),
         const AssetImage(ImageRasterPath.avatar6),
       ];
+
+  List<ChattingCardData> getChatting() => [
+        ChattingCardData(
+          image: const AssetImage(ImageRasterPath.avatar5),
+          isOnline: false,
+          name: 'Ali Ganiev',
+          lastMessage: 'i added my new task',
+          isRead: false,
+          totalUnread: 80,
+        ),
+        ChattingCardData(
+          image: const AssetImage(ImageRasterPath.avatar2),
+          isOnline: true,
+          name: 'Gani Valies',
+          lastMessage: 'i am working on new task',
+          isRead: false,
+          totalUnread: 100,
+        ),
+        ChattingCardData(
+          image: const AssetImage(ImageRasterPath.avatar4),
+          isOnline: false,
+          name: 'Ali Ganiev',
+          lastMessage: 'yorvordim...',
+          isRead: false,
+          totalUnread: 50,
+        ),
+        ChattingCardData(
+          image: const AssetImage(ImageRasterPath.avatar3),
+          isOnline: false,
+          name: 'Vali Aliev',
+          lastMessage: 'gap yoq Alijon',
+          isRead: true,
+          totalUnread: 10,
+        ),
+        ChattingCardData(
+          image: const AssetImage(ImageRasterPath.avatar1),
+          isOnline: true,
+          name: 'Karim Vallomat',
+          lastMessage: 'we`ll have meeting 9:00PM',
+          isRead: true,
+          totalUnread: 10,
+        ),
+      ];
 }

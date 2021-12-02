@@ -40,6 +40,7 @@ class _Sidebar extends StatelessWidget {
                   activeIcon: EvaIcons.email,
                   icon: EvaIcons.emailOutline,
                   label: 'Email',
+                  totalNotif: 100,
                 ),
                 SelectionButtonData(
                   activeIcon: EvaIcons.person,
