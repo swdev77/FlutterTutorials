@@ -1,10 +1,10 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:budget_tracker/pages/daily_page.dart';
 import 'package:budget_tracker/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
 
 class RootApp extends StatefulWidget {
-  RootApp({Key? key}) : super(key: key);
+  const RootApp({Key? key}) : super(key: key);
 
   @override
   _RootAppState createState() => _RootAppState();
@@ -35,12 +35,13 @@ class _RootAppState extends State<RootApp> {
   Widget getBody() {
     return IndexedStack(
       index: pageIndex,
-      children: const [
-        Center(child: Text('Daily Page')),
-        Center(child: Text('Stats Page')),
-        Center(child: Text('Budget Page')),
-        Center(child: Text('Profile Page')),
-        Center(child: Text('Create budget Page')),
+      children: [
+        DailyPage(),
+        // const Center(child: Text('Daily Page')),
+        const Center(child: Text('Stats Page')),
+        const Center(child: Text('Budget Page')),
+        const Center(child: Text('Profile Page')),
+        const Center(child: Text('Create budget Page')),
       ],
     );
   }
