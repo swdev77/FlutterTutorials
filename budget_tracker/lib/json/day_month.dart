@@ -8,10 +8,10 @@ List days = [
   {"label": "Sat", "day": "4"},
 ];
 List months = [
-  {"label": "2018", "day": "Jan"},
-  {"label": "2018", "day": "Feb"},
-  {"label": "2018", "day": "Mar"},
-  {"label": "2018", "day": "Apr"},
-  {"label": "2018", "day": "May"},
-  {"label": "2018", "day": "Jun"},
+  {"label": "2018", "month": "Jan"},
+  {"label": "2018", "month": "Feb"},
+  {"label": "2018", "month": "Mar"},
+  {"label": "2018", "month": "Apr"},
+  {"label": "2018", "month": "May"},
+  {"label": "2018", "month": "Jun"},
 ];
