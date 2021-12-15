@@ -36,9 +36,21 @@ class _BodyState extends State<Body> {
         width: double.infinity,
         child: Column(
           children: [
+            const Spacer(),
             Expanded(
-              flex: 3,
+              child: Text(
+                'TOKOTO',
+                style: TextStyle(
+                  fontSize: getProportionateScreenWidth(36),
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 4,
               child: PageView.builder(
+                physics: const BouncingScrollPhysics(),
                 onPageChanged: (value) => setState(() {
                   currentPage = value;
                 }),
