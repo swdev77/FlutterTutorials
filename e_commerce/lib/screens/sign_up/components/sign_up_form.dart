@@ -1,25 +1,24 @@
 import 'package:e_commerce/components/custom_suffix_icon.dart';
 import 'package:e_commerce/components/default_button.dart';
 import 'package:e_commerce/components/form_error.dart';
-import 'package:e_commerce/screens/forgot_password/forgot_password.dart';
-import 'package:e_commerce/screens/login_success/login_success_screen.dart';
+import 'package:e_commerce/components/social_media.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-class SignForm extends StatefulWidget {
-  const SignForm({Key? key}) : super(key: key);
+class SignUpForm extends StatefulWidget {
+  SignUpForm({Key? key}) : super(key: key);
 
   @override
-  State<SignForm> createState() => _SignFormState();
+  _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignFormState extends State<SignForm> {
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
-  bool remember = false;
+  String? confirm_password;
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
@@ -28,48 +27,17 @@ class _SignFormState extends State<SignForm> {
       child: Column(
         children: [
           _buildEmailFormField(),
-          SizedBox(height: getProportionateScreenHeight(20)),
-          _buildPasswordFormField(),
-          SizedBox(height: getProportionateScreenHeight(20)),
-          Row(
-            children: [
-              Checkbox(
-                value: remember,
-                activeColor: kPrimaryColor,
-                onChanged: (value) {
-                  setState(() {
-                    remember = value ?? false;
-                  });
-                },
-              ),
-              const Text('Remember me'),
-              const Spacer(),
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  ForgotPasswordScreen.routeName,
-                ),
-                child: const Text(
-                  'Forgot password',
-                  style: TextStyle(
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ],
+          SizedBox(height: getProportionateScreenHeight(30)),
+          _buildPasswordFormField(passValue: password),
+          SizedBox(height: getProportionateScreenHeight(30)),
+          _buildPasswordFormField(
+            label: 'Confirm Password',
+            hint: 'Re-enter your password',
+            passValue: confirm_password,
           ),
           FormError(errors: errors),
-          SizedBox(height: getProportionateScreenHeight(20)),
-          DefaultButton(
-            text: 'Continue',
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
-
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
-              }
-            },
-          )
+          SizedBox(height: getProportionateScreenHeight(30)),
+          DefaultButton(text: 'Continue', press: () {}),
         ],
       ),
     );
@@ -118,10 +86,14 @@ class _SignFormState extends State<SignForm> {
     );
   }
 
-  TextFormField _buildPasswordFormField() {
+  TextFormField _buildPasswordFormField({
+    String label = 'Password',
+    String hint = 'Enter you password',
+    String? passValue,
+  }) {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) => passValue = newValue,
       onChanged: (value) {
         if (value.isNotEmpty && errors.contains(kPassNullError)) {
           setState(() {
@@ -149,8 +121,8 @@ class _SignFormState extends State<SignForm> {
         return null;
       },
       decoration: InputDecoration(
-        labelText: 'Password',
-        hintText: 'Enter you password',
+        labelText: label,
+        hintText: hint,
         suffixIcon: Padding(
           padding: edgeInsets,
           child: const CustomSuffixIcon(icon: '$kIconsPath/Lock.svg'),
@@ -158,6 +130,4 @@ class _SignFormState extends State<SignForm> {
       ),
     );
   }
-
-
 }

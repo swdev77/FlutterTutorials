@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../components/social_media.dart';
 import '../../../components/no_account_text.dart';
-import '../../../components/social_card.dart';
-import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'sign_form.dart';
 
@@ -36,23 +35,7 @@ class Body extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight! * 0.08),
                 const SignForm(),
                 SizedBox(height: SizeConfig.screenHeight! * 0.08),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SocialCard(
-                      icon: '$kIconsPath/google-icon.svg',
-                      press: () {},
-                    ),
-                    SocialCard(
-                      icon: '$kIconsPath/facebook-2.svg',
-                      press: () {},
-                    ),
-                    SocialCard(
-                      icon: '$kIconsPath/twitter.svg',
-                      press: () {},
-                    ),
-                  ],
-                ),
+                const SocialMedia(),
                 SizedBox(height: getProportionateScreenHeight(20)),
                 const NoAccountText()
               ],
@@ -63,3 +46,4 @@ class Body extends StatelessWidget {
     );
   }
 }
+
