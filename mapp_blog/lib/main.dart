@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'home_page.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -53,7 +55,14 @@ class LoginPage extends StatelessWidget {
             Image.asset('images/login.png'),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HomePage(),
+                  ),
+                );
+              },
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(200, 40),
               ),
