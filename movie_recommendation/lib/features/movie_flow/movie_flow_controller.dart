@@ -20,7 +20,7 @@ class MovieFlowController extends StateNotifier<MovieFlowState> {
   void toggleSelected(Genre genre) {
     state = state.copyWith(genres: [
       for (final oldGenre in state.genres)
-        if (oldGenre.id == genre.id) genre else oldGenre
+        if (oldGenre == genre) oldGenre.toggledSelected() else oldGenre
     ]);
   }
 

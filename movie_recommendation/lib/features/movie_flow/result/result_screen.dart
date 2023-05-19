@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_recommendation/core/constants.dart';
 import 'package:movie_recommendation/core/widgets/primary_button.dart';
-import 'package:movie_recommendation/features/movie_flow/genre/genre.dart';
+import 'package:movie_recommendation/features/movie_flow/movie_flow_controller.dart';
 import 'package:movie_recommendation/features/movie_flow/result/movie.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends ConsumerWidget {
   static route({bool fullscreenDialog = true}) => MaterialPageRoute(
         builder: (context) => const ResultScreen(),
         fullscreenDialog: fullscreenDialog,
@@ -13,18 +14,9 @@ class ResultScreen extends StatelessWidget {
 
   final double movieHeight = 150;
 
-  final movie = const Movie(
-      title: 'The hulk',
-      overview:
-          'Bruce Banner, a genetics researcher with a tragic past, suffers an accident that causes him to transform into a raging green monster when he gets angry.',
-      voteAverage: 4.8,
-      genres: [Genre(name: 'Action'), Genre(name: 'Fantasy')],
-      releaseDate: '2019-05-24',
-      backdropPath: '',
-      posterPath: '');
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final movie = ref.watch(movieFlowControllerProvider).movie;
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -68,11 +60,11 @@ class ResultScreen extends StatelessWidget {
   }
 }
 
-class CoverImage extends StatelessWidget {
+class CoverImage extends ConsumerWidget {
   const CoverImage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       constraints: const BoxConstraints(minHeight: 298),
       child: ShaderMask(
@@ -92,7 +84,7 @@ class CoverImage extends StatelessWidget {
   }
 }
 
-class MovieImageDetails extends StatelessWidget {
+class MovieImageDetails extends ConsumerWidget {
   const MovieImageDetails({
     super.key,
     required this.movie,
@@ -103,7 +95,7 @@ class MovieImageDetails extends StatelessWidget {
   final double movieHeight;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
