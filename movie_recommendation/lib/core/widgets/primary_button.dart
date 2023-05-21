@@ -7,10 +7,12 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.onPress,
     required this.text,
+    this.isLoading = false,
     this.width = double.infinity,
   });
 
   final VoidCallback onPress;
+  final bool isLoading;
   final String text;
   final double width;
 
@@ -29,10 +31,15 @@ class PrimaryButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              text,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
+            if (isLoading)
+              CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.onPrimary,
+              )
+            else
+              Text(
+                text,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
           ],
         ),
       ),

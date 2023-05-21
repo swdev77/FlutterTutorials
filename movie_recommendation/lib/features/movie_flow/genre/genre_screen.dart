@@ -29,24 +29,32 @@ class GenreScreen extends ConsumerWidget {
               textAlign: TextAlign.center,
             ),
             Expanded(
-              child: ListView.separated(
-                padding:
-                    const EdgeInsets.symmetric(vertical: kListItemsSpacing),
-                itemBuilder: (context, index) {
-                  final genre =
-                      ref.watch(movieFlowControllerProvider).genres[index];
-                  return ListCard(
-                    genre: genre,
-                    onTap: () => ref
-                        .watch(movieFlowControllerProvider.notifier)
-                        .toggleSelected(genre),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: kMediumSpacing);
-                },
-                itemCount: ref.read(movieFlowControllerProvider).genres.length,
-              ),
+              child: ref.watch(movieFlowControllerProvider).genres.when(
+                    data: (genres) {
+                      return ListView.separated(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: kListItemsSpacing),
+                        itemBuilder: (context, index) {
+                          final genre = genres[index];
+                          return ListCard(
+                            genre: genre,
+                            onTap: () => ref
+                                .watch(movieFlowControllerProvider.notifier)
+                                .toggleSelected(genre),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: kMediumSpacing);
+                        },
+                        itemCount: genres.length,
+                      );
+                    },
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
+                    error: (e, s) => const Center(
+                      child: Text('Something went wrong on our end'),
+                    ),
+                  ),
             ),
             PrimaryButton(
               onPress: ref.read(movieFlowControllerProvider.notifier).nextPage,

@@ -27,14 +27,18 @@ class Movie {
 
   factory Movie.fromEntity(MovieEntity entity, List<Genre> genres) {
     return Movie(
-      title: entity.title,
-      overview: entity.overview,
-      voteAverage: entity.voteAverage,
-      genres: genres.where((genre) => entity.genreIds.contains(genre.id)).toList(growable: false),
-      releaseDate: entity.releaseDate,
-      posterPath: entity.posterPath ?? _baseImageUrl + entity.posterPath! ,
-      backdropPath: entity.backdropPath ?? _baseImageUrl + entity.backdropPath!,
-    );
+        title: entity.title,
+        overview: entity.overview,
+        voteAverage: entity.voteAverage,
+        genres: genres
+            .where((genre) => entity.genreIds.contains(genre.id))
+            .toList(growable: false),
+        releaseDate: entity.releaseDate,
+        posterPath:
+            entity.posterPath == null ? '' : _baseImageUrl + entity.posterPath!,
+        backdropPath: entity.backdropPath == null
+            ? ''
+            : _baseImageUrl + entity.backdropPath!);
   }
 
   Movie.initial()

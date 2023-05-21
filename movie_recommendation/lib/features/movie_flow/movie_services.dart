@@ -13,7 +13,7 @@ final movieServiceProvider = Provider<MovieService>((ref) {
 
 abstract class MovieService {
   Future<List<Genre>> getGenres();
-  Future<Movie> getRecommendedMovies(
+  Future<Movie> getRecommendedMovie(
       int rating, int yearsBack, List<Genre> genres,
       [DateTime? yearsBackFromDate]);
 }
@@ -30,7 +30,7 @@ class TMDBMovieService implements MovieService {
   }
 
   @override
-  Future<Movie> getRecommendedMovies(
+  Future<Movie> getRecommendedMovie(
       int rating, int yearsBack, List<Genre> genres,
       [DateTime? yearsBackFromDate]) async {
     final date = yearsBackFromDate ?? DateTime.now();
