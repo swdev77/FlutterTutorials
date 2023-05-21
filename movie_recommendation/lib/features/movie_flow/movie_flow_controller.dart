@@ -23,7 +23,7 @@ class MovieFlowController extends StateNotifier<MovieFlowState> {
   MovieFlowController(
     MovieFlowState state,
     this._movieService,
-  ) : super(state){
+  ) : super(state) {
     LoadGenres();
   }
 
@@ -32,23 +32,39 @@ class MovieFlowController extends StateNotifier<MovieFlowState> {
   Future<void> LoadGenres() async {
     state = state.copyWith(genres: const AsyncValue.loading());
     final result = await _movieService.getGenres();
-    state = state.copyWith(genres: AsyncValue.data(result));
+    result.when(
+      (genres) {
+        final updatedGenres = AsyncValue.data(genres);
+        state = state.copyWith(genres: updatedGenres);
+      },
+      (error) {
+        state =
+            state.copyWith(genres: AsyncValue.error(error, StackTrace.current));
+      },
+    );
   }
 
   Future<void> getRecommendedMovie() async {
     state = state.copyWith(movie: const AsyncValue.loading());
-    final selectedGenres = state.genres.value?.where((e)=> e.isSelected==true).toList(growable: false) ?? []; 
+    final selectedGenres = state.genres.value
+            ?.where((e) => e.isSelected == true)
+            .toList(growable: false) ??
+        [];
     final result = await _movieService.getRecommendedMovie(
       state.rating,
       state.yearsBack,
       selectedGenres,
     );
-    state = state.copyWith(movie: AsyncValue.data(result));
+    result.when(
+      (success) => state = state.copyWith(movie: AsyncValue.data(success)),
+      (error) => state =
+          state.copyWith(movie: AsyncValue.error(error, StackTrace.current)),
+    );
   }
 
   void toggleSelected(Genre genre) {
     state = state.copyWith(
-      genres: AsyncValue.data( [
+        genres: AsyncValue.data([
       for (final oldGenre in state.genres.value!)
         if (oldGenre == genre) oldGenre.toggledSelected() else oldGenre
     ]));
@@ -64,7 +80,8 @@ class MovieFlowController extends StateNotifier<MovieFlowState> {
 
   void nextPage() {
     if (state.pageController.page! >= 1) {
-      if (!state.genres.value!.any((element) => element.isSelected == true)) return;
+      if (!state.genres.value!.any((element) => element.isSelected == true))
+        return;
     }
 
     state.pageController.nextPage(

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_recommendation/core/constants.dart';
+import 'package:movie_recommendation/core/widgets/failure_screen.dart';
 import 'package:movie_recommendation/core/widgets/primary_button.dart';
 import 'package:movie_recommendation/features/movie_flow/movie_flow_controller.dart';
 import 'package:movie_recommendation/features/movie_flow/result/movie.dart';
+
+import '../../../core/failure.dart';
 
 class ResultScreen extends ConsumerWidget {
   static route({bool fullscreenDialog = true}) => MaterialPageRoute(
@@ -64,9 +67,12 @@ class ResultScreen extends ConsumerWidget {
               child: CircularProgressIndicator(),
             ),
           ),
-          error: (e, s) => const Center(
-            child: Text('Something went wrong on our end'),
-          ),
+          error: (e, s) {
+            if (e is Failure) {
+              return FailureScreen(message: e.message);
+            }
+            return const FailureScreen(message: 'Something went wrong');
+          },
         );
   }
 }
