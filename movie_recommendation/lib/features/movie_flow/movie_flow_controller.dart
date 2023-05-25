@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_recommendation/features/movie_flow/movie_flow_state.dart';
-import 'package:movie_recommendation/features/movie_flow/movie_services.dart';
+import 'package:movie_recommendation/features/movie_flow/movie_service.dart';
 
 import 'genre/genre.dart';
 import 'result/movie.dart';
