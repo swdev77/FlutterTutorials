@@ -21,7 +21,7 @@ class Genre {
     );
   }
 
-  Genre toggledSelected() {
+  Genre toggleSelected() {
     return Genre(
       name: name,
       id: id,

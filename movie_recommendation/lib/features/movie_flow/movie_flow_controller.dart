@@ -66,16 +66,17 @@ class MovieFlowController extends StateNotifier<MovieFlowState> {
     state = state.copyWith(
         genres: AsyncValue.data([
       for (final oldGenre in state.genres.value!)
-        if (oldGenre == genre) oldGenre.toggledSelected() else oldGenre
+        if (oldGenre == genre) oldGenre.toggleSelected() else oldGenre
     ]));
   }
 
   void updateRating(int updatedRating) {
-    state = state.copyWith(rating: updatedRating);
+    state = state.copyWith(rating: updatedRating < 0 ? 0 : updatedRating);
   }
 
   void updateYearsBack(int updatedYearsBack) {
-    state = state.copyWith(yearsBack: updatedYearsBack);
+    state =
+        state.copyWith(yearsBack: updatedYearsBack < 0 ? 0 : updatedYearsBack);
   }
 
   void nextPage() {
