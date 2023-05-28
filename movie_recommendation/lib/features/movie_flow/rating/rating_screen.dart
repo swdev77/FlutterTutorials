@@ -54,7 +54,7 @@ class RatingScreen extends ConsumerWidget {
           ),
           const Spacer(),
           PrimaryButton(
-            onPress: ref.read(movieFlowControllerProvider.notifier).nextPage,
+            onPressed: ref.read(movieFlowControllerProvider.notifier).nextPage,
             text: 'Yes please',
           ),
           const SizedBox(height: kMediumSpacing),

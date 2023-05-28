@@ -62,7 +62,7 @@ class GenreScreen extends ConsumerWidget {
                   ),
             ),
             PrimaryButton(
-              onPress: ref.read(movieFlowControllerProvider.notifier).nextPage,
+              onPressed: ref.read(movieFlowControllerProvider.notifier).nextPage,
               text: 'Continue',
             ),
             const SizedBox(height: kMediumSpacing),

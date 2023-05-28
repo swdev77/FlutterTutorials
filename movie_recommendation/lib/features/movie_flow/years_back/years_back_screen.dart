@@ -57,7 +57,7 @@ class YearsBackScreen extends ConsumerWidget {
             ),
             const Spacer(),
             PrimaryButton(
-              onPress: () async {
+              onPressed: () async {
                 await ref
                     .watch(movieFlowControllerProvider.notifier)
                     .getRecommendedMovie();

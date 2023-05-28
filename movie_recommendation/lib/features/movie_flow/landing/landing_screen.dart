@@ -25,7 +25,7 @@ class LandingScreen extends ConsumerWidget {
             Image.asset('images/landing.png'),
             const Spacer(),
             PrimaryButton(
-              onPress: ref.read(movieFlowControllerProvider.notifier).nextPage,
+              onPressed: ref.read(movieFlowControllerProvider.notifier).nextPage,
               text: 'Get Started',
             ),
             const SizedBox(height: kMediumSpacing),

@@ -1,17 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_recommendation/core/constants.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
     super.key,
-    required this.onPress,
+    required this.onPressed,
     required this.text,
     this.isLoading = false,
     this.width = double.infinity,
   });
 
-  final VoidCallback onPress;
+  final VoidCallback onPressed;
   final bool isLoading;
   final String text;
   final double width;
@@ -21,7 +20,7 @@ class PrimaryButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: TextButton(
-        onPressed: onPress,
+        onPressed: onPressed,
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(kBorderRadius / 2),
