@@ -1,19 +1,97 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:movie_recommendation/core/constants.dart';
 import 'package:movie_recommendation/core/widgets/failure_screen.dart';
+import 'package:movie_recommendation/core/widgets/network_fading_image.dart';
 import 'package:movie_recommendation/core/widgets/primary_button.dart';
 import 'package:movie_recommendation/features/movie_flow/movie_flow_controller.dart';
 import 'package:movie_recommendation/features/movie_flow/result/movie.dart';
 
 import '../../../core/failure.dart';
 
+class ResultScreenAnimator extends StatefulWidget {
+  const ResultScreenAnimator({super.key});
+
+  @override
+  State<ResultScreenAnimator> createState() => _ResultScreenAnimatorState();
+}
+
+class _ResultScreenAnimatorState extends State<ResultScreenAnimator>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ResultScreen(
+      animationController: _controller,
+    );
+  }
+}
+
 class ResultScreen extends ConsumerWidget {
   static route({bool fullscreenDialog = true}) => MaterialPageRoute(
-        builder: (context) => const ResultScreen(),
+        builder: (context) => const ResultScreenAnimator(),
         fullscreenDialog: fullscreenDialog,
       );
-  const ResultScreen({super.key});
+  ResultScreen({
+    Key? key,
+    required this.animationController,
+  })  : titleOpacity = Tween<double>(begin: 0, end: 1).animate(
+          CurvedAnimation(
+            parent: animationController,
+            curve: const Interval(0, 0.3),
+          ),
+        ),
+        genreOpacity = Tween<double>(begin: 0, end: 1).animate(
+          CurvedAnimation(
+            parent: animationController,
+            curve: const Interval(0.3, 0.4),
+          ),
+        ),
+        ratingOpacity = Tween<double>(begin: 0, end: 1).animate(
+          CurvedAnimation(
+            parent: animationController,
+            curve: const Interval(0.4, 0.6),
+          ),
+        ),
+        descriptionOpacity = Tween<double>(begin: 0, end: 1).animate(
+          CurvedAnimation(
+            parent: animationController,
+            curve: const Interval(0.6, 0.8),
+          ),
+        ),
+        buttonOpacity = Tween<double>(begin: 0, end: 1).animate(
+          CurvedAnimation(
+            parent: animationController,
+            curve: const Interval(0.8, 1),
+          ),
+        ),
+        super(key: key);
+
+  final AnimationController animationController;
+
+  final Animation<double> titleOpacity;
+  final Animation<double> genreOpacity;
+  final Animation<double> ratingOpacity;
+  final Animation<double> descriptionOpacity;
+  final Animation<double> buttonOpacity;
 
   final double movieHeight = 150;
 
@@ -38,6 +116,9 @@ class ResultScreen extends ConsumerWidget {
                               child: MovieImageDetails(
                                 movie: movie,
                                 movieHeight: movieHeight,
+                                titleOpacity: titleOpacity,
+                                genreOpacity: genreOpacity,
+                                ratingOpacity: ratingOpacity,
                               ),
                             )
                           ],
@@ -45,17 +126,23 @@ class ResultScreen extends ConsumerWidget {
                         SizedBox(height: movieHeight / 2),
                         Padding(
                           padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            movie.overview,
-                            style: Theme.of(context).textTheme.bodyLarge,
+                          child: FadeTransition(
+                            opacity: descriptionOpacity,
+                            child: Text(
+                              movie.overview,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  PrimaryButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    text: 'Find another movie',
+                  FadeTransition(
+                    opacity: buttonOpacity,
+                    child: PrimaryButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      text: 'Find another movie',
+                    ),
                   ),
                   const SizedBox(height: kMediumSpacing),
                 ],
@@ -100,13 +187,7 @@ class CoverImage extends ConsumerWidget {
               ]).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
         },
         blendMode: BlendMode.dstIn,
-        child: Image.network(
-          movie.backdropPath ?? '',
-          fit: BoxFit.cover,
-          errorBuilder: (context, e, s) {
-            return const SizedBox();
-          },
-        ),
+        child: NetWorkFadingImage(path: movie.backdropPath ?? ''),
       ),
     );
   }
@@ -114,13 +195,18 @@ class CoverImage extends ConsumerWidget {
 
 class MovieImageDetails extends ConsumerWidget {
   const MovieImageDetails({
-    super.key,
     required this.movie,
     required this.movieHeight,
+    required this.titleOpacity,
+    required this.genreOpacity,
+    required this.ratingOpacity,
   });
 
   final Movie movie;
   final double movieHeight;
+  final Animation<double> titleOpacity;
+  final Animation<double> genreOpacity;
+  final Animation<double> ratingOpacity;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -132,40 +218,45 @@ class MovieImageDetails extends ConsumerWidget {
           SizedBox(
             width: 100,
             height: movieHeight,
-            child: Image.network(
-              movie.posterPath ?? '',
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => const SizedBox(),
-            ),
+            child: NetWorkFadingImage(path: movie.posterPath ?? ''),
           ),
           const SizedBox(width: kMediumSpacing),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  movie.title,
-                  style: theme.textTheme.headlineMedium,
+                FadeTransition(
+                  opacity: titleOpacity,
+                  child: Text(
+                    movie.title,
+                    style: theme.textTheme.headlineMedium,
+                  ),
                 ),
-                Text(
-                  movie.genresCommaSeparated,
-                  style: theme.textTheme.bodyLarge,
+                FadeTransition(
+                  opacity: genreOpacity,
+                  child: Text(
+                    movie.genresCommaSeparated,
+                    style: theme.textTheme.bodyLarge,
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      movie.voteAverage.toString(),
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color:
-                            theme.textTheme.bodyLarge?.color?.withOpacity(0.6),
+                FadeTransition(
+                  opacity: ratingOpacity,
+                  child: Row(
+                    children: [
+                      Text(
+                        movie.voteAverage.toString(),
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: theme.textTheme.bodyLarge?.color
+                              ?.withOpacity(0.6),
+                        ),
                       ),
-                    ),
-                    const Icon(
-                      Icons.star_rounded,
-                      size: 16,
-                      color: Colors.amber,
-                    )
-                  ],
+                      const Icon(
+                        Icons.star_rounded,
+                        size: 16,
+                        color: Colors.amber,
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
